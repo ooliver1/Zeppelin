@@ -14,7 +14,7 @@ services:
       - ./:/zeppelin
 
   mysql:
-    image: mysql:8.0
+    image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: ${DOCKER_PROD_MYSQL_ROOT_PASSWORD?:Missing DOCKER_PROD_MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: zeppelin
@@ -24,7 +24,6 @@ services:
       - ${DOCKER_PROD_MYSQL_PORT:?Missing DOCKER_PROD_MYSQL_PORT}:3306
     volumes:
       - ./docker/production/data/mysql:/var/lib/mysql
-    command: --authentication-policy=mysql_native_password
     healthcheck:
       test: "/usr/bin/mysql --user=root --password=\"${DOCKER_PROD_MYSQL_ROOT_PASSWORD}\" --execute \"SHOW DATABASES;\""
       interval: 5s
